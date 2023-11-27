@@ -8,7 +8,8 @@
 
 
 - Cloudformation Stack
-- ![on-ecs-ページ2 drawio](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/c382de86-109a-4003-bfc9-9a3b45168ced)
+- ![cs-ページ2 drawio](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/dd4af0f8-81cd-4e70-88ad-a1e30bf4b0be)
+
 
 ## deploy to aws
 1. cdk deploy
