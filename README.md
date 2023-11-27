@@ -32,8 +32,7 @@ $ yarn cdk deploy MainStack
 
 4. Check to Top page
 
-![スクリーンショット 2023-11-27 19 14 12](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/e3bcce06-e349-4037-a165-ac39fbbd2b86)
-
+![スクリーンショット 2023-11-27 20 54 45](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/a3622966-138e-410a-bd58-60de9cad8e98)
 
 5. Setting GitHub Actions Variables
 
@@ -44,8 +43,7 @@ $ yarn cdk deploy MainStack
   - ECS_SERVICE_NAME
   - ECS_TASK_DEFINITION_ARN
 
-![スクリーンショット 2023-11-27 19 13 45](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/2dea8f6b-4f50-486e-873f-937d8d477169)
-
+![スクリーンショット 2023-11-27 20 54 16](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/331a1858-acca-493f-8b8c-7830c74dec29)
 
 6. Git Push for Deploy to ECS
 
