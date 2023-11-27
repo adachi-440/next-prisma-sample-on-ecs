@@ -18,7 +18,7 @@ $ yarn cdk deploy EcrStack
 
 $ cd ./app
 $ aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 123412341234.dkr.ecr.ap-northeast-1.amazonaws.com
-$ docker build -t next-prisma-sample .
+$ docker build --platform linux/amd64 -t next-prisma-sample .
 $ docker tag next-prisma-sample:latest 123412341234.dkr.ecr.ap-northeast-1.amazonaws.com/next-prisma-sample:latest
 $ docker push 123412341234.dkr.ecr.ap-northeast-1.amazonaws.com/next-prisma-sample:latest
 ```
