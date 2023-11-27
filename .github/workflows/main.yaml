@@ -1,0 +1,77 @@
+name: deploy to ecs
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  REPOSITORY: next-prisma-sample
+  ECS_TASK_DEFINITION: task-definition.json
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write # needed to interact with GitHub's OIDC Token endpoint.
+      contents: read
+
+    steps:
+      # - name: github-app-access-token
+      #   id: app-token
+      #   uses: actions/create-github-app-token@v1      # TODO: そもそもsubmodulesとして扱わなくていいようにする
+      #   with:
+      #     app-id: ${{ secrets.APP_ID }}
+      #     private-key: ${{ secrets.PRIVATE_KEY }}
+      # - name: Checkout
+      #   uses: actions/checkout@v2
+      #   with:
+      #     token: ${{ steps.app-token.outputs.token }}
+      #     submodules: recursive
+      # - name: Checkout
+      - uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_IAM_ROLE_ARN }}
+          role-session-name: ${{github.repository_id}} # Optional: Member must satisfy regular expression pattern: [\w+=,.@-]*
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - uses: aws-actions/amazon-ecr-login@v1
+        id: login-ecr
+
+      - name: build and push docker image to ecr
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd app
+          ls -la
+          docker build . --tag ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }} --tag ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest
+          docker push -a ${{ env.REGISTRY }}/${{ env.REPOSITORY }}
+          echo "IMAGE=${{ env.REGISTRY}}/${{ env.REPOSITORY  }}:${{ env.IMAGE_TAG }}" >> $GITHUB_ENV
+
+      - name: load task definition
+        run: |
+          aws ecs describe-task-definition --task-definition ${{ vars.ECS_TASK_DEFINITION_ARN }} --query taskDefinition > ${{ env.ECS_TASK_DEFINITION }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.REPOSITORY }}
+          image: ${{ env.IMAGE }}
+          environment-variables: |
+            LOG_LEVEL=info
+            NODE_ENV=production
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ vars.ECS_SERVICE_NAME }}
+          cluster: ${{ vars.ECS_CLUSTER_NAME }}
+          wait-for-service-stability: true
+          wait-for-minutes: 10
