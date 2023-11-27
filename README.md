@@ -1,6 +1,15 @@
 # next-prisma-sample-on-ecs
 
 
+## about
+
+- deploy flow
+- ![deploy flow drawio](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/71a4fad0-ee42-48a1-8e3f-63d35113c9aa)
+
+- Cloudformation Stack
+- ![on-ecs-ページ2 drawio](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/c382de86-109a-4003-bfc9-9a3b45168ced)
+
+## deploy to aws
 1. cdk deploy
 
 ```bash
