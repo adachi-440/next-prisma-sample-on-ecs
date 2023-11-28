@@ -1,17 +1,15 @@
 # next-prisma-sample-on-ecs
 
-
-## about
+## About
 
 - deploy flow
 - ![n-ecs-ページ1 drawio](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/1ea50ad8-6a3a-443f-8099-e8252273107d)
 
-
 - Cloudformation Stack
 - ![cs-ページ2 drawio](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/dd4af0f8-81cd-4e70-88ad-a1e30bf4b0be)
 
-
 ## deploy to aws
+
 1. cdk deploy
 
 ```bash
@@ -64,10 +62,8 @@ $ git push
 
 5. DB Migration
 
-
 ```bash
 # On host os
 
 $ bash ./script/run-migrate-task.sh
 ```
-
