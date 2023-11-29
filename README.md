@@ -1,6 +1,6 @@
 # next-prisma-sample-on-ecs
 
-## About
+## about
 
 - deploy flow
 - ![n-ecs-ページ1 drawio](https://github.com/YutaOkoshi/next-prisma-sample-on-ecs/assets/37532269/1ea50ad8-6a3a-443f-8099-e8252273107d)
